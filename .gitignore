@@ -55,8 +55,8 @@ coverage.xml
 # PyBuilder
 target/
 
-# Jupyter Notebook
-.ipynb_checkpoints
+# PyCharm
+.idea
 
 # pyenv
 .python-version
