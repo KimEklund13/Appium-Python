@@ -1,0 +1,7 @@
+05/12/2020 11:44:25 PM: - StatusOfTest - INFO: ### VERIFICATION SUCCEEDEDVerifying date text label is displayed
+05/12/2020 11:44:25 PM: - StatusOfTest - INFO: test_date_picker ### TEST SUCCESSFUL
+ith locator: //XCUIElementTypePickerWheel[2] and locator type: xpath
+05/12/2020 11:44:23 PM: - datepickerview - INFO: 
+Element found with locator: //XCUIElementTypePickerWheel[3] and locator type: xpath
+05/12/2020 11:44:24 PM: - datepickerview - INFO: 
+Element found with locator: //XCUIElementTypePickerWheel[4] and locator type: xpath

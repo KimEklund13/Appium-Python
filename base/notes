@@ -1,0 +1,9 @@
+For more base class methods, check out:
+https://gist.githubusercontent.com/asheeshmisra/ccdd3eefaa1c743f18b576ed663cdc1f/raw/a9ced1857e3205c932d50a716ff2964f5078ad24/BasePageClass.py
+
+# More methods can include:
+    # various assertions
+    # putting waits on everything with actions (waiting for element to be present before doing action)
+        Ex: assertTap -> waits for element to be clickable before tapping on it
+    # different element states (is visible, is enabled) with waits
+    # complex chains like TouchActions or ActionChains (drag and drop)

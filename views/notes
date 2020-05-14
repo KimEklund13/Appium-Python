@@ -1,0 +1,8 @@
+Locators for elements
+
+@iOSFindBy(id ="iOSButtonID")
+@AndroidFindBy(id="androidButtonID")
+private WebElement signIn
+https://saucelabs.com/blog/cross-platform-android-and-ios-automation-testing-with-appium
+
+
