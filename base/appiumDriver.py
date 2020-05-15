@@ -79,6 +79,33 @@ class AppiumDriver:
             print_stack()
         return element
 
+    def waitForElementToAppear(self, locator, locatorType="id",
+                                    timeout=10, pollFrequency=0.5):
+        """
+        Waits for an element based on expected conditions (to be clickable)
+        :param locator: Locator string (Ex: "id_name")
+        :param locatorType: See 'getByType' for arguments (Ex: "accessibilityid"
+        :param timeout: Int in seconds
+        :param pollFrequency: Int in seconds
+        :return: returns clickable element once the element is clickable if timeout does not expire
+        """
+        element = None
+        try:
+            byType = self.getByType(locatorType)
+            self.log.info("Waiting for maximum :: " + str(timeout) +
+                          " :: seconds for element to be clickable")
+            wait = WebDriverWait(self.driver, timeout=timeout,
+                                 poll_frequency=pollFrequency,
+                                 ignored_exceptions=[NoSuchElementException,
+                                                     ElementNotVisibleException,
+                                                     ElementNotSelectableException])
+            element = wait.until(EC.presence_of_element_located((byType, locator)))
+            self.log.info("Element appeared on the web page")
+        except:
+            self.log.info("Element not appeared on the web page")
+            print_stack()
+        return element
+
     def getByType(self, locatorType):
         """
         Takes a short-hand string and returns the By.LOCATORTYPE
@@ -167,9 +194,9 @@ class AppiumDriver:
             if locator:
                 element = self.getElement(locator, locatorType)
             element.click()
-            self.log.info("Clicked on element with locator: " + locator + " and locator type: " + locatorType)
+            self.log.info("Clicked on element with locator: " + locator + " with locator type: " + locatorType)
         except:
-            self.log.error("Cannot click on the element with " + locator + " and locator type: " + locatorType)
+            self.log.error("Cannot click on the element with locator: " + locator + " with locator type: " + locatorType)
             print_stack()
 
     def sendKeys(self, text, locator="", locatorType="accessibilityid", element=None):

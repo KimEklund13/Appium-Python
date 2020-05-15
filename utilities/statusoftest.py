@@ -1,6 +1,5 @@
 import logging
 from traceback import print_stack
-
 from utilities.logger import logger
 from base.appiumDriver import AppiumDriver
 

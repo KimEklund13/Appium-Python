@@ -12,8 +12,24 @@ class HomeView(BaseView):
         self.driver = driver
 
     def assertUICatalogTitleExists(self):
-        title = self.driver.find_element_by_xpath(self._ui_catalog_xpath)
+        title = self.getUICatalogTitle()
         return title.is_displayed()
+
+    def getUICatalogTitle(self):
+        return self.waitForElementToAppear(locator=self._ui_catalog_xpath, locatorType="xpath")
+
+    def navigate_to_each_view(self):
+        elementList = self.driver.find_elements_by_xpath(".//XCUIElementTypeButton[@name='More Info']")
+        clickCount = 0
+
+        for cell in elementList:
+            self.elementClick(element=cell)
+            self.driver.back()
+            self.waitForElementToAppear(locator=self._ui_catalog_xpath, locatorType="xpath")
+            clickCount += 1
+
+            if clickCount == 10:
+                self.vertical_swipe_iOS("up")
 
     # Interactions
     def navigate_to_action_sheets_screen(self):
