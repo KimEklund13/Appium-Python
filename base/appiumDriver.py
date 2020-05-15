@@ -157,8 +157,9 @@ class AppiumDriver:
         """
         element = None
         try:
-            byType = self.getByType(locatorType)
-            element = self.driver.find_element(byType, locator)
+            # byType = self.getByType(locatorType)
+            # element = self.driver.find_element(byType, locator)
+            element = self.waitForElementToAppear(locator=locator, locatorType=locatorType)
             self.log.info("Element found with locator: " + locator + " and locator type: " + locatorType)
         except:
             self.log.error("Element not found with locator: " + locator + " and locator type: " + locatorType)
