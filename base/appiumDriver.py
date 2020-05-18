@@ -17,13 +17,13 @@ class AppiumDriver:
     def __init__(self, driver):
         self.driver = driver
 
-    def getWebTitle(self):
+    def get_web_title(self):
         """
         Used for web testing, if app opens Safari/Chrome?
         """
         return self.driver.title
 
-    def screenShot(self, resultMessage):
+    def take_screenshot(self, resultMessage):
         """
         Takes a screenshot of the current open view
         Called normally upon test failure
@@ -52,8 +52,8 @@ class AppiumDriver:
         """
         self.driver.execute_script("mobile: swipe", {"direction": direction})
 
-    def waitForElementToBeClickable(self, locator, locatorType="id",
-                                    timeout=10, pollFrequency=0.5):
+    def wait_for_element_to_be_clickable(self, locator, locatorType="accessibilityid",
+                                         timeout=10, pollFrequency=0.5):
         """
         Waits for an element based on expected conditions (to be clickable)
         :param locator: Locator string (Ex: "id_name")
@@ -64,162 +64,161 @@ class AppiumDriver:
         """
         element = None
         try:
-            byType = self.getByType(locatorType)
-            self.log.info("Waiting for maximum :: " + str(timeout) +
-                          " :: seconds for element to be clickable")
+            byType = self.get_by_type(locatorType)
+            self.log.info("Waiting for element with locator: '" + locator + "' to be clickable")
             wait = WebDriverWait(self.driver, timeout=timeout,
                                  poll_frequency=pollFrequency,
                                  ignored_exceptions=[NoSuchElementException,
                                                      ElementNotVisibleException,
                                                      ElementNotSelectableException])
             element = wait.until(EC.element_to_be_clickable((byType, locator)))
-            self.log.info("Element appeared on the web page")
         except:
-            self.log.info("Element not appeared on the web page")
+            self.log.info("Timeout expired waiting for element with locator: '" + locator + "' to be clickable")
             print_stack()
         return element
 
-    def waitForElementToAppear(self, locator, locatorType="id",
-                                    timeout=10, pollFrequency=0.5):
+    def wait_for_element_to_appear(self, locator, locator_type="accessibilityid",
+                                   timeout=10, pollFrequency=0.5):
         """
         Waits for an element based on expected conditions (to be clickable)
         :param locator: Locator string (Ex: "id_name")
-        :param locatorType: See 'getByType' for arguments (Ex: "accessibilityid"
+        :param locator_type: See 'getByType' for arguments (Ex: "accessibilityid"
         :param timeout: Int in seconds
         :param pollFrequency: Int in seconds
         :return: returns clickable element once the element is clickable if timeout does not expire
         """
         element = None
         try:
-            byType = self.getByType(locatorType)
-            self.log.info("Waiting for maximum :: " + str(timeout) +
-                          " :: seconds for element to be clickable")
+            by_type = self.get_by_type(locator_type)
+            self.log.info("Waiting for element with locator: '" + locator + "' to appear")
             wait = WebDriverWait(self.driver, timeout=timeout,
                                  poll_frequency=pollFrequency,
                                  ignored_exceptions=[NoSuchElementException,
                                                      ElementNotVisibleException,
                                                      ElementNotSelectableException])
-            element = wait.until(EC.presence_of_element_located((byType, locator)))
-            self.log.info("Element appeared on the web page")
+            element = wait.until(EC.visibility_of_element_located((by_type, locator)))
         except:
-            self.log.info("Element not appeared on the web page")
             print_stack()
         return element
 
-    def getByType(self, locatorType):
+    def get_by_type(self, locator_type):
         """
         Takes a short-hand string and returns the By.LOCATORTYPE
-        :param locatorType: String
+        :param locator_type: String
         :return: By.LOCATORTYPE
         """
-        locatorType = locatorType.lower()
-        if locatorType == "accessibilityid":
+        locator_type = locator_type.lower()
+        if locator_type == "accessibilityid":
             # iOS: accessibility-id
             # Android: content-desc
             return MobileBy.ACCESSIBILITY_ID
-        elif locatorType == "classname":
+        elif locator_type == "classname":
             # iOS: full name of the XCUI element and begins with XCUIElementType
             # Android: full name of the UIAutomator2 class (e.g.: android.widget.TextView)
             return By.CLASS_NAME
-        elif locatorType == "id":
+        elif locator_type == "id":
             # Native element identifier. resource-id for android; name for iOS.
             return By.ID
-        elif locatorType == "name":
+        elif locator_type == "name":
             return By.NAME
-        elif locatorType == "xpath":
+        elif locator_type == "xpath":
             return By.XPATH
-        elif locatorType == "image":
+        elif locator_type == "image":
             return MobileBy.IMAGE
-        elif locatorType == "uiautomator":
+        elif locator_type == "uiautomator":
             # UIAutomator2 only
             return MobileBy.ANDROID_UIAUTOMATOR
-        elif locatorType == "viewtag":
+        elif locator_type == "viewtag":
             # Espresso only
             return MobileBy.ANDROID_VIEWTAG
-        elif locatorType == "datamatcher":
+        elif locator_type == "datamatcher":
             # Espresso only
             return MobileBy.ANDROID_DATA_MATCHER
-        elif locatorType == "classchain":
+        elif locator_type == "classchain":
             # iOS only
             return MobileBy.IOS_CLASS_CHAIN
-        elif locatorType == "linktext":
+        elif locator_type == "linktext":
             return By.LINK_TEXT
         else:
             self.log.error("Locator type not supported - or check the argument you passed in")
         return False
 
-    def getElement(self, locator, locatorType="accessibilityid"):
+    def get_element(self, locator, locator_type="accessibilityid"):
         """
         Queries for an element
         :param locator: Locator string (Ex: "id_name")
-        :param locatorType: See 'getByType' for arguments (Ex: "accessibilityid")
+        :param locator_type: See 'getByType' for arguments (Ex: "accessibilityid")
         :return: element
         """
         element = None
         try:
             # byType = self.getByType(locatorType)
             # element = self.driver.find_element(byType, locator)
-            element = self.waitForElementToAppear(locator=locator, locatorType=locatorType)
-            self.log.info("Element found with locator: " + locator + " and locator type: " + locatorType)
+            element = self.wait_for_element_to_appear(locator=locator, locator_type=locator_type)
+            self.log.info("Element found with locator: '" + locator + "'")
         except:
-            self.log.error("Element not found with locator: " + locator + " and locator type: " + locatorType)
+            self.log.error("Element not found with locator: '" + locator + "'")
         return element
 
-    def getElementList(self, locator, locatorType="accessibilityid"):
+    def get_element_list(self, locator, locator_type="accessibilityid"):
         """
         Queries for a list of elements
         :param locator: Locator string (Ex: "id_name")
-        :param locatorType: See 'getByType' for arguments (Ex: "accessibilityid")
+        :param locator_type: See 'getByType' for arguments (Ex: "accessibilityid")
         :return: element list
         """
-        elementList = None
+        element_list = None
         try:
-            byType = self.getByType(locatorType)
-            elementList = self.driver.find_elements(byType, locator)
-            if len(elementList) == 1:
-                self.log.info("Only one element in list. Consider using the singular `getElement` method instead")
-            self.log.info("Element list found")
+            by_type = self.get_by_type(locator_type)
+            element_list = self.driver.find_elements(by_type, locator)
+            if len(element_list) == 1:
+                self.log.info("Only one element in list. Consider using the singular `get_element` method instead")
+            elif len(element_list) > 0:
+                self.log.info("Element list found, num of elements: " + str(len(element_list)))
+            else:
+                self.log.info("Element list is empty. Used locator: '" + locator + "'")
         except:
-            self.log.error("Element list not found")
-        return elementList
+            self.log.error("Invalid arguments passed into 'get_element_list' method")
+        return element_list
 
-    def elementClick(self, locator="", locatorType="accessibilityid", element=None):
+    def click_element(self, locator="", locator_type="accessibilityid", element=None):
         """
         Clicks on an element
         :param locator: Locator string (Ex: "id_name")
-        :param locatorType: See 'getByType' for arguments (Ex: "accessibilityid")
+        :param locator_type: See 'getByType' for arguments (Ex: "accessibilityid")
         :param element: accepts an element in lieu of providing the locator and locatorType
         :return: click action on the element
         """
         try:
             if locator:
-                element = self.getElement(locator, locatorType)
+                element = self.get_element(locator, locator_type)
             element.click()
-            self.log.info("Clicked on element with locator: " + locator + " with locator type: " + locatorType)
+            self.log.info("Clicked on element with locator: '" + locator + "'")
         except:
-            self.log.error("Cannot click on the element with locator: " + locator + " with locator type: " + locatorType)
+            self.log.error(
+                "Cannot click on the element with locator: '" + locator + "'")
             print_stack()
 
-    def sendKeys(self, text, locator="", locatorType="accessibilityid", element=None):
+    def send_text(self, text, locator="", locator_type="accessibilityid", element=None):
         """
         Sends text to an element
         :param text: Text to be sent to the element
         :param locator: Locator string (Ex: "id_name")
-        :param locatorType: See 'getByType' for arguments (Ex: "accessibilityid")
+        :param locator_type: See 'getByType' for arguments (Ex: "accessibilityid")
         :param element: accepts an element in lieu of providing the locator and locatorType
         :return: sends text to the element
         """
         try:
             if locator:
-                element = self.getElement(locator, locatorType)
+                element = self.get_element(locator, locator_type)
             element.send_keys(text)
-            self.log.info("Sent keys to element with locator: " + locator + " and locator type: " + locatorType)
+            self.log.info("Sent keys to element with locator: '" + locator + "'")
         except:
             self.log.error(
-                "Cannot send keys to element with locator: " + locator + " and locator type: " + locatorType)
+                "Cannot send keys to element with locator: '" + locator + "'")
             print_stack()
 
-    def getText(self, locator="", locatorType="accessibilityid", element=None, info=""):
+    def get_text(self, locator="", locator_type="accessibilityid", element=None, info=""):
         """
         Get 'Text' from an element
         Either provide element or a combination of locator and locatorType
@@ -227,7 +226,7 @@ class AppiumDriver:
         try:
             if locator:  # This means if locator is not empty
                 self.log.debug("In locator condition")
-                element = self.getElement(locator, locatorType)
+                element = self.get_element(locator, locator_type)
             self.log.debug("Before finding text")
             text = element.text
             self.log.debug("After finding element, size is: " + str(len(text)))
@@ -241,42 +240,41 @@ class AppiumDriver:
             text = None
         return text
 
-    def clearField(self, locator="", locatorType="accessibilityid", element=None):
+    def clear_field(self, locator="", locator_type="accessibilityid", element=None):
         """
         Clear an element field
         """
         if locator:
-            element = self.getElement(locator, locatorType)
+            element = self.get_element(locator, locator_type)
         element.clear()
-        self.log.info("Clear field with locator: " + locator +
-                      " locatorType: " + locatorType)
+        self.log.info("Clear field with locator: '" + locator + "'")
 
-    def isElementPresent(self, locator="", locatorType="accessibilityid", element=None):
+    def is_element_present(self, locator="", locator_type="accessibilityid", element=None):
         """
         Checks for the presence of an element and returns a bool value.
         :param locator: Locator string (Ex: "id_name")
-        :param locatorType: See 'getByType' for arguments (Ex: "accessibilityid")
+        :param locator_type: See 'getByType' for arguments (Ex: "accessibilityid")
         :param element: accepts an element in lieu of providing the locator and locatorType
         :return: True or False
         """
         try:
             if locator:
-                element = self.getElement(locator, locatorType)
+                element = self.get_element(locator, locator_type)
             if element is not None:
-                self.log.info("Element is present")
+                self.log.info("Element with locator: '" + locator + "' is present")
                 return True
             else:
                 return False
         except:
-            self.log.info("Element is not present")
+            self.log.info("Element with locator: '" + locator + "' is not present")
             return False
 
-    def elementListPresence(self, locator, locatorType="accessibilityid"):
+    def element_list_presence(self, locator, locator_type="accessibilityid"):
         # plural elements, returns bool like isElementPresent()
         try:
-            elementsList = self.getElementList(locator, locatorType)
+            elementsList = self.get_element_list(locator, locator_type)
             if len(elementsList) > 0:
-                self.log.info("\nAt least one element in the list was found")
+                self.log.info("\nNumber of elements found: " + str(len(elementsList)))
                 return True
             else:
                 return False
@@ -284,7 +282,7 @@ class AppiumDriver:
             self.log.info("\nElement(s) are not present")
             return False
 
-    def isElementDisplayed(self, locator="", locatorType="id", element=None):
+    def is_element_displayed(self, locator="", locator_type="accessibilityid", element=None):
         """
         Check if element is displayed
         Either provide element or a combination of locator and locatorType
@@ -292,21 +290,19 @@ class AppiumDriver:
         isDisplayed = False
         try:
             if locator:  # This means if locator is not empty
-                element = self.getElement(locator, locatorType)
+                element = self.get_element(locator, locator_type)
             if element is not None:
                 isDisplayed = element.is_displayed()
-                self.log.info("Element is displayed with locator: " + locator +
-                              " locatorType: " + locatorType)
+                self.log.info("Element is displayed with locator: '" + locator + "'")
             else:
-                self.log.info("Element not displayed with locator: " + locator +
-                              " locatorType: " + locatorType)
+                self.log.info("Element is not displayed with locator: '" + locator + "'")
             return isDisplayed
         except:
-            print("Element not found")
+            self.log.error("Exception on 'is_element_displayed'")
             return False
 
     # TODO: Modify this for mobile context
-    def isEnabled(self, locator, locatorType="id", info=""):
+    def is_enabled(self, locator, locator_type="accessibilityid", info=""):
         """
         Check if element is enabled
 
@@ -321,7 +317,7 @@ class AppiumDriver:
         Exception:
             None
         """
-        element = self.getElement(locator, locatorType=locatorType)
+        element = self.get_element(locator, locator_type=locator_type)
         enabled = False
         try:
             attributeValue = self.getElementAttributeValue(element=element, attribute="disabled")
@@ -339,6 +335,6 @@ class AppiumDriver:
             self.log.error("Element :: '" + info + "' state could not be found")
         return enabled
 
-    def isDisabled(self, locator, locatorType="id", info=""):
-        enabled = self.isEnabled(locator, locatorType, info)
+    def is_disabled(self, locator, locatorType="accessibilityid", info=""):
+        enabled = self.is_enabled(locator, locatorType, info)
         return not enabled  # Opposite of enabled

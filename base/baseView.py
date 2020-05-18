@@ -31,7 +31,7 @@ class BaseView(AppiumDriver):
         :param titleToVerify: Title on the view that needs to be verified
         """
         try:
-            actualTitle = self.getWebTitle()
+            actualTitle = self.get_web_title()
             return self.util.verifyTextContains(actualTitle, titleToVerify)
         except:
             self.log.error("Failed to get the view title")

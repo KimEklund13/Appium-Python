@@ -1,8 +1,0 @@
-05/14/2020 04:56:44 PM: - StatusOfTest - INFO: ### VERIFICATION SUCCEEDEDVerifying date text label is displayed
-05/14/2020 04:56:44 PM: - StatusOfTest - INFO: test_date_picker ### TEST SUCCESSFUL
-05/14/2020 04:56:40 PM: - datepickerview - INFO: Waiting for maximum :: 10 :: seconds for element to be clickable
-05/14/2020 04:56:41 PM: - datepickerview - INFO: Element appeared on the web page
-05/14/2020 04:56:41 PM: - datepickerview - INFO: Waiting for maximum :: 10 :: seconds for element to be clickable
-05/14/2020 04:56:42 PM: - datepickerview - INFO: Element appeared on the web page
-05/14/2020 04:56:42 PM: - datepickerview - INFO: Waiting for maximum :: 10 :: seconds for element to be clickable
-05/14/2020 04:56:43 PM: - datepickerview - INFO: Element appeared on the web page

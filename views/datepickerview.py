@@ -23,16 +23,16 @@ class datepickerview(BaseView):
     def choose_tomorrow_for_date_picker(self, strHour="11", strMinute="30", strMeridium="PM"):
         tomorrow = self.getTomorrowsDate()
 
-        day_picker = self.waitForElementToBeClickable(locatorType=By.XPATH, locator=datepickerview._day_xpath)
+        day_picker = self.wait_for_element_to_be_clickable(locatorType=By.XPATH, locator=datepickerview._day_xpath)
         day_picker.send_keys(tomorrow)
 
-        hour_picker = self.waitForElementToBeClickable(locatorType=By.XPATH, locator=datepickerview._hour_xpath)
+        hour_picker = self.wait_for_element_to_be_clickable(locatorType=By.XPATH, locator=datepickerview._hour_xpath)
         hour_picker.send_keys(strHour)
 
-        minute_picker = self.waitForElementToBeClickable(locatorType=By.XPATH, locator=datepickerview._min_xpath)
+        minute_picker = self.wait_for_element_to_be_clickable(locatorType=By.XPATH, locator=datepickerview._min_xpath)
         minute_picker.send_keys(strMinute)
 
-        meridium_picker = self.waitForElementToBeClickable(locatorType=By.XPATH, locator=datepickerview._meridium_xpath)
+        meridium_picker = self.wait_for_element_to_be_clickable(locatorType=By.XPATH, locator=datepickerview._meridium_xpath)
         meridium_picker.send_keys(strMeridium)
 
     def getTomorrowsDate(self):

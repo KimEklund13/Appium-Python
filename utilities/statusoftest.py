@@ -5,7 +5,6 @@ from base.appiumDriver import AppiumDriver
 
 
 class StatusOfTest(AppiumDriver):
-
     log = logger(logging.INFO)
 
     def __init__(self, driver):
@@ -21,15 +20,15 @@ class StatusOfTest(AppiumDriver):
                 else:
                     self.resultList.append("FAIL")
                     self.log.error("### VERIFICATION FAILED" + resultMessage)
-                    self.screenShot(resultMessage)
+                    self.take_screenshot(resultMessage)
             else:
                 self.resultList.append("FAIL")
                 self.log.error("### VERIFICATION FAILED - RESULT IS NONE" + resultMessage)
-                self.screenShot(resultMessage)
+                self.take_screenshot(resultMessage)
         except:
             self.resultList.append("FAIL")
             self.log.error("### EXCEPTION OCCURRED ###")
-            self.screenShot(resultMessage)
+            self.take_screenshot(resultMessage)
             print_stack()
 
     def verifyMark(self, result, resultMessage):
@@ -47,10 +46,10 @@ class StatusOfTest(AppiumDriver):
         self.setResult(result, resultMessage)
 
         if "FAIL" in self.resultList:
-            self.log.error(testName + " ### TEST FAILED")
+            self.log.error(testName + " ### TEST FAILED: ")
             self.resultList.clear()
             assert True == False
         else:
-            self.log.info(testName + " ### TEST SUCCESSFUL")
+            self.log.info(testName + " ### TEST SUCCESSFUL: ")
             self.resultList.clear()
             assert True == True
