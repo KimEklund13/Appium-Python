@@ -33,7 +33,8 @@ class StatusOfTest(AppiumDriver):
 
     def verifyMark(self, result, resultMessage):
         """
-        Mark the result of the verification point in a test case
+        Mark the result of the verification point in a test case.
+        Will not stop a test if there is a failure, but it will fail the test.
         """
         self.setResult(result, resultMessage)
 
@@ -41,7 +42,8 @@ class StatusOfTest(AppiumDriver):
         """
         Mark the final result of the verification point in a test case
         This needs to be called at least once in a test case
-        This should be final test status of the test case
+        This should be final test status of the test case (hard assertion)
+        This will stop a test if it fails.
         """
         self.setResult(result, resultMessage)
 

@@ -10,7 +10,8 @@ class ActionSheetsView(BaseView):
         super().__init__(driver)
         self.driver = driver
 
-    # Action Sheets
+    # Locators
+    # TODO: Make methods || if device == iOS / if device == Android, return "string locator"
     _action_sheets_title_xpath = "//XCUIElementTypeNavigationBar[@name='Action Sheets']"
     _ok_cancel_id = "Okay / Cancel"
     _other_id = "Other"

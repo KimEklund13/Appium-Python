@@ -14,8 +14,8 @@ def setUp():
 @pytest.fixture(scope="class")
 def oneTimeSetUp(request, device):
     print("Running one time setup")
-    caps = CapsFactory(device)
-    driver = caps.getDriverInstance()
+    caps_factory = CapsFactory(device)
+    driver = caps_factory.get_driver_instance()
 
     if request.cls is not None:
         request.cls.driver = driver
@@ -23,6 +23,18 @@ def oneTimeSetUp(request, device):
     yield driver
     driver.quit()
     print("Running one time tear down")
+
+
+@pytest.fixture(scope="class")
+def getPlatform(request, device):
+    print("Getting platform for locators")
+    caps_factory = CapsFactory(device)
+    platform = caps_factory.get_platform_name()
+
+    if request.cls is not None:
+        request.cls.platform = platform
+
+    yield platform
 
 
 def pytest_addoption(parser):

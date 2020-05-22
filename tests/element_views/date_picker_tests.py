@@ -4,6 +4,7 @@ from utilities.statusoftest import StatusOfTest
 import pytest
 
 
+# TODO: This needs to be cleaned up and use a fixture and setup method for navigation
 @pytest.mark.usefixtures("oneTimeSetUp", "setUp")
 class TestDatePicker:
 
@@ -13,7 +14,6 @@ class TestDatePicker:
     #     self.testStatus = StatusOfTest(self.driver)
 
     def test_date_picker(self):
-
         home = HomeView(self.driver)
         datePicker = datepickerview(self.driver)
         testStatus = StatusOfTest(self.driver)
@@ -26,4 +26,3 @@ class TestDatePicker:
 
         result = datePicker.verifyDatePickerLabel()
         testStatus.assertionMark("test_date_picker", result, "Verifying date text label is displayed")
-
