@@ -1,28 +1,24 @@
+import unittest
 from views.home.homeview import HomeView
-from views.datepickerview import datepickerview
+from views.datepickerview import DatePickerView
 from utilities.statusoftest import StatusOfTest
 import pytest
 
 
-# TODO: This needs to be cleaned up and use a fixture and setup method for navigation
-@pytest.mark.usefixtures("oneTimeSetUp", "setUp")
-class TestDatePicker:
+@pytest.mark.usefixtures("one_time_set_up", "setUp")
+class TestDatePicker(unittest.TestCase):
 
-    # @pytest.fixture(autouse=True)
-    # def classSetup(self, oneTimeSetUp):
-    #     self.homeView = HomeView(self.driver)
-    #     self.testStatus = StatusOfTest(self.driver)
+    @pytest.fixture(autouse=True)
+    def class_setup(self, one_time_set_up, get_platform):
+        self.homeView = HomeView(self.driver)
+        self.datePicker = DatePickerView(self.driver, self.platform)
+        self.testStatus = StatusOfTest(self.driver)
+
+    def setUp(self):
+        self.homeView.navigate_to_date_pickers_screen()
 
     def test_date_picker(self):
-        home = HomeView(self.driver)
-        datePicker = datepickerview(self.driver)
-        testStatus = StatusOfTest(self.driver)
+        self.datePicker.choose_tomorrow_for_date_picker()
 
-        # ----- actual test ------- #
-
-        home.navigate_to_date_pickers_screen()
-
-        datePicker.choose_tomorrow_for_date_picker()
-
-        result = datePicker.verifyDatePickerLabel()
-        testStatus.assertionMark("test_date_picker", result, "Verifying date text label is displayed")
+        result = self.datePicker.verifyDatePickerLabel()
+        self.testStatus.assertionMark("test_date_picker", result, "Verifying date text label is displayed")

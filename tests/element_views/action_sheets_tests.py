@@ -5,12 +5,12 @@ import unittest
 import pytest
 
 
-@pytest.mark.usefixtures("oneTimeSetUp", "setUp")
+@pytest.mark.usefixtures("one_time_set_up", "setUp")
 class ActionSheetsTests(unittest.TestCase):
 
     @pytest.fixture(autouse=True)
-    def classSetup(self, oneTimeSetUp):
-        self.ASView = ActionSheetsView(self.driver)
+    def classSetup(self, one_time_set_up, get_platform):
+        self.ASView = ActionSheetsView(self.driver, self.platform)
         self.testStatus = StatusOfTest(self.driver)
         self.homeView = HomeView(self.driver)
 

@@ -1,7 +1,6 @@
 from base.baseView import BaseView
 from utilities.logger import logger
 import logging
-from selenium.common.exceptions import NoSuchElementException
 
 
 class ActivityIndicators(BaseView):
@@ -45,7 +44,7 @@ class ActivityIndicators(BaseView):
         _tinted_spinner_xpath = ""
         try:
             if platform == "ios":
-                _tinted_spinner_xpath = "(//XCUIElementTypeActivityIndicator[@name='In progress])[2]"
+                _tinted_spinner_xpath = "(//XCUIElementTypeActivityIndicator[@name='In progress'])[2]"
             elif platform == "android":
                 _tinted_spinner_xpath = ""
             return _tinted_spinner_xpath
@@ -80,4 +79,16 @@ class ActivityIndicators(BaseView):
     def activity_indicators_title_is_displayed(self):
         activity_indicators_title = self.get_activity_indicator_title_locator()
         return self.is_element_present(activity_indicators_title, "xpath")
+
+    def activity_all_elements_are_displayed(self):
+        # elementsList = [self.get_gray_label_locator(), self.get_gray_spinner_locator(), self.get_tinted_label_locator(),
+        #                 self.get_tinted_spinner_locator()]
+        elementsList = [self.get_element(self.get_tinted_spinner_locator(), "xpath"),
+                        self.get_element(self.get_tinted_label_locator(), "xpath"),
+                        self.get_element(self.get_gray_spinner_locator(), "xpath"),
+                        self.get_element(self.get_gray_label_locator(), "xpath")]
+        if len(elementsList) == 4:
+            return True
+        else:
+            return False
 

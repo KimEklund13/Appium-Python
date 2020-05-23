@@ -4,11 +4,11 @@ import pytest
 import unittest
 
 
-@pytest.mark.usefixtures("oneTimeSetUp", "setUp")
+@pytest.mark.usefixtures("one_time_set_up", "setUp")
 class TestHomePage(unittest.TestCase):
 
     @pytest.fixture(autouse=True)
-    def classSetup(self, oneTimeSetUp):
+    def classSetup(self, one_time_set_up):
         self.homeView = HomeView(self.driver)
         self.testStatus = StatusOfTest(self.driver)
 

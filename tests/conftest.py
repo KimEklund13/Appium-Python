@@ -2,18 +2,17 @@ import pytest
 from base.capsfactory import CapsFactory
 
 
-# Conftest should always be on the same level in the dir as the test file(s)
-
 @pytest.fixture()
+# Currently not doing anything with the tests. Just here to serve as a method-level fixture example.
 def setUp():
-    print("Running method level set up")
+    print("Running method level set up -- not doing anything")
     yield
-    print("Running method level tear down")
+    print("Running method level tear down -- not doing anything")
 
 
 @pytest.fixture(scope="class")
-def oneTimeSetUp(request, device):
-    print("Running one time setup")
+def one_time_set_up(request, device):
+    print("Running one time setup, getting driver")
     caps_factory = CapsFactory(device)
     driver = caps_factory.get_driver_instance()
 
@@ -26,7 +25,7 @@ def oneTimeSetUp(request, device):
 
 
 @pytest.fixture(scope="class")
-def getPlatform(request, device):
+def get_platform(request, device):
     print("Getting platform for locators")
     caps_factory = CapsFactory(device)
     platform = caps_factory.get_platform_name()
@@ -47,6 +46,7 @@ def device(request):
     return request.config.getoption("--device")
 
 
+# TODO: This currently isn't being used. Will build out args that will be parsed into the CapsFactory
 @pytest.fixture(scope="session")
 def osVersion(request):
     return request.config.getoption("--osVersion")
