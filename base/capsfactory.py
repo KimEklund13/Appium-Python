@@ -46,26 +46,24 @@ class CapsFactory:
     def get_capabilities(self):
         try:
             if self.device == "android-sim":
-                # Set android driver (espresso or uiautomator)
                 # TODO Add caps for Android sim
-                caps = {'platformVersion': '', 'platformName': 'Android', 'deviceName': '',
-                        'automationName': '', 'app': ''}
+                caps = {'platformVersion': '9.0', 'platformName': 'Android', 'deviceName': 'emulator-5554',
+                        'automationName': 'Espresso', 'app': '/abs/path/to/my.apk'}
+                # if app is already installed, supply the appPackage and appActivity instead of 'app'
+                # get device name by using $adb devices -- after emulator has been launched
             elif self.device == "ios-real-device":
-                # Set XCUIDriver
                 # TODO Add caps for iOS real device
                 caps = {'platformVersion': '12.4', 'platformName': 'iOS', 'deviceName': 'iPhone 8 Plus',
                         'automationName': 'XCUITest', 'bundleId': 'com.example.apple-samplecode.UICatalog',
                         'uuid': '', 'xcodeOrgId': '', 'xcodeSigningId': ''}
                 self.log.info("Running tests on iOS Physical Device")
             elif self.device == "android-real-device":
-                # Set android driver (espresso or uiautomator)
-                # TODO Add caps for Android real device
-                caps = {'platformVersion': '', 'platformName': 'Android', 'deviceName': '',
-                        'automationName': '', 'app': ''}
+                caps = {'platformVersion': '9.0', 'platformName': 'Android', 'deviceName': 'My Android Phone',
+                        'automationName': 'Espresso', 'app': '/abs/path/to/my.apk'}
+                # if app is already installed, supply the appPackage and appActivity instead of 'app'
                 self.log.info("Running tests on iOS Physical Device")
             else:
-                # Set XCUIDriver driver
-                caps = {'platformVersion': '12.4', 'platformName': 'iOS', 'deviceName': 'iPhone 8 Plus',
+                caps = {'platformVersion': '12.4', 'platformName': 'iOS', 'deviceName': 'iPhone 8 Plus 12.4',
                         'automationName': 'XCUITest', 'bundleId': 'com.example.apple-samplecode.UICatalog'}
                 self.log.info("Running tests on iOS Simulator")
             return caps

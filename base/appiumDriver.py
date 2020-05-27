@@ -146,9 +146,6 @@ class AppiumDriver:
     def get_element(self, locator, locator_type="accessibilityid"):
         """
         Queries for an element
-        :param locator: Locator string (Ex: "id_name")
-        :param locator_type: See 'getByType' for arguments (Ex: "accessibilityid")
-        :return: element
         """
         element = None
         try:
@@ -163,9 +160,6 @@ class AppiumDriver:
     def get_element_list(self, locator, locator_type="accessibilityid"):
         """
         Queries for a list of elements
-        :param locator: Locator string (Ex: "id_name")
-        :param locator_type: See 'getByType' for arguments (Ex: "accessibilityid")
-        :return: element list
         """
         element_list = None
         try:
@@ -184,10 +178,6 @@ class AppiumDriver:
     def click_element(self, locator="", locator_type="accessibilityid", element=None):
         """
         Clicks on an element
-        :param locator: Locator string (Ex: "id_name")
-        :param locator_type: See 'getByType' for arguments (Ex: "accessibilityid")
-        :param element: accepts an element in lieu of providing the locator and locatorType
-        :return: click action on the element
         """
         try:
             if locator:
@@ -202,11 +192,6 @@ class AppiumDriver:
     def send_text(self, text, locator="", locator_type="accessibilityid", element=None):
         """
         Sends text to an element
-        :param text: Text to be sent to the element
-        :param locator: Locator string (Ex: "id_name")
-        :param locator_type: See 'getByType' for arguments (Ex: "accessibilityid")
-        :param element: accepts an element in lieu of providing the locator and locatorType
-        :return: sends text to the element
         """
         try:
             if locator:
@@ -224,7 +209,7 @@ class AppiumDriver:
         Either provide element or a combination of locator and locatorType
         """
         try:
-            if locator:  # This means if locator is not empty
+            if locator:
                 self.log.debug("In locator condition")
                 element = self.get_element(locator, locator_type)
             self.log.debug("Before finding text")
@@ -252,10 +237,6 @@ class AppiumDriver:
     def is_element_present(self, locator="", locator_type="accessibilityid", element=None):
         """
         Checks for the presence of an element and returns a bool value.
-        :param locator: Locator string (Ex: "id_name")
-        :param locator_type: See 'getByType' for arguments (Ex: "accessibilityid")
-        :param element: accepts an element in lieu of providing the locator and locatorType
-        :return: True or False
         """
         try:
             if locator:
@@ -283,13 +264,9 @@ class AppiumDriver:
             return False
 
     def is_element_displayed(self, locator="", locator_type="accessibilityid", element=None):
-        """
-        Check if element is displayed
-        Either provide element or a combination of locator and locatorType
-        """
         isDisplayed = False
         try:
-            if locator:  # This means if locator is not empty
+            if locator:
                 element = self.get_element(locator, locator_type)
             if element is not None:
                 isDisplayed = element.is_displayed()
@@ -301,40 +278,20 @@ class AppiumDriver:
             self.log.error("Exception on 'is_element_displayed'")
             return False
 
-    # TODO: Modify this for mobile context
-    def is_enabled(self, locator, locator_type="accessibilityid", info=""):
-        """
-        Check if element is enabled
-
-        Parameters:
-            1. Required:
-                1. locator - Locator of the element to check
-            2. Optional:
-                1. locatorType - Type of the locator(id(default), xpath, css, className, linkText)
-                2. info - Information about the element, label/name of the element
-        Returns:
-            boolean
-        Exception:
-            None
-        """
-        element = self.get_element(locator, locator_type=locator_type)
+    def is_enabled(self, locator, locator_type="accessibilityid", element=None):
         enabled = False
         try:
-            attributeValue = self.getElementAttributeValue(element=element, attribute="disabled")
-            if attributeValue is not None:
-                enabled = element.is_enabled()
-            else:
-                value = self.getElementAttributeValue(element=element, attribute="class")
-                self.log.info("Attribute value From Application Web UI --> :: " + value)
-                enabled = not ("disabled" in value)
+            if locator:
+                element = self.get_element(locator, locator_type)
+            enabled = element.is_enabled()
             if enabled:
-                self.log.info("Element :: '" + info + "' is enabled")
+                self.log.info("Element is enabled")
             else:
-                self.log.info("Element :: '" + info + "' is not enabled")
+                self.log.info("Element is not enabled")
         except:
-            self.log.error("Element :: '" + info + "' state could not be found")
+            self.log.error("Element state could not be found")
         return enabled
 
-    def is_disabled(self, locator, locatorType="accessibilityid", info=""):
-        enabled = self.is_enabled(locator, locatorType, info)
-        return not enabled  # Opposite of enabled
+    def is_disabled(self, locator, locator_type="accessibilityid", element=None):
+        enabled = self.is_enabled(locator, locator_type, element)
+        return not enabled
