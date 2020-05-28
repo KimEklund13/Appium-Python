@@ -55,7 +55,7 @@ class CapsFactory:
                 # TODO Add caps for iOS real device
                 caps = {'platformVersion': '12.4', 'platformName': 'iOS', 'deviceName': 'iPhone 8 Plus',
                         'automationName': 'XCUITest', 'bundleId': 'com.example.apple-samplecode.UICatalog',
-                        'uuid': '', 'xcodeOrgId': '', 'xcodeSigningId': ''}
+                        'udid': '', 'xcodeOrgId': '', 'xcodeSigningId': ''}
                 self.log.info("Running tests on iOS Physical Device")
             elif self.device == "android-real-device":
                 caps = {'platformVersion': '9.0', 'platformName': 'Android', 'deviceName': 'My Android Phone',
