@@ -30,7 +30,7 @@ class Util(object):
         except InterruptedError:
             traceback.print_stack()
 
-    def getAlphaNumeric(self, length, type='letters'):
+    def get_alpha_numeric(self, length, type='letters'):
         """
         Get random string of characters
 
@@ -52,13 +52,13 @@ class Util(object):
             case = string.ascii_letters
         return alpha_num.join(random.choice(case) for i in range(length))
 
-    def getUniqueName(self, charCount=10):
+    def get_unique_name(self, charCount=10):
         """
         Get a unique name
         """
-        return self.getAlphaNumeric(charCount, 'lower')
+        return self.get_alpha_numeric(charCount, 'lower')
 
-    def getUniqueNameList(self, listSize=5, itemLength=None):
+    def get_unique_name_list(self, listSize=5, itemLength=None):
         """
         Get a list of valid email ids
 
@@ -69,10 +69,10 @@ class Util(object):
         """
         nameList = []
         for i in range(0, listSize):
-            nameList.append(self.getUniqueName(itemLength[i]))
+            nameList.append(self.get_unique_name(itemLength[i]))
         return nameList
 
-    def verifyTextContains(self, actualText, expectedText):
+    def verify_text_contains(self, actualText, expectedText):
         """
         Verify actual text contains expected text string
 
@@ -89,7 +89,7 @@ class Util(object):
             self.log.info("### VERIFICATION DOES NOT CONTAIN !!!")
             return False
 
-    def verifyTextMatch(self, actualText, expectedText):
+    def verify_text_match(self, actualText, expectedText):
         """
         Verify text match
 
@@ -103,10 +103,10 @@ class Util(object):
             self.log.info("### VERIFICATION MATCHED !!!")
             return True
         else:
-            self.log.info("### VERIFICATION DOES NOT MATCHED !!!")
+            self.log.info("### VERIFICATION DOES NOT MATCH !!!")
             return False
 
-    def verifyListMatch(self, expectedList, actualList):
+    def verify_list_match(self, expectedList, actualList):
         """
         Verify two list matches
 
@@ -116,7 +116,7 @@ class Util(object):
         """
         return set(expectedList) == set(actualList)
 
-    def verifyListContains(self, expectedList, actualList):
+    def verify_list_contains(self, expectedList, actualList):
         """
         Verify actual list contains elements of expected list
 

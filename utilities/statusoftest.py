@@ -8,7 +8,7 @@ class StatusOfTest(AppiumDriver):
     log = logger(logging.INFO)
 
     def __init__(self, driver):
-        super(StatusOfTest, self).__init__(driver)
+        super().__init__(driver)
         self.resultList = []
 
     def setResult(self, result, resultMessage):

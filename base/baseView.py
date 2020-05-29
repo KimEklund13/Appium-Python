@@ -32,7 +32,7 @@ class BaseView(AppiumDriver):
         """
         try:
             actualTitle = self.get_web_title()
-            return self.util.verifyTextContains(actualTitle, titleToVerify)
+            return self.util.verify_text_contains(actualTitle, titleToVerify)
         except:
             self.log.error("Failed to get the view title")
             print_stack()
