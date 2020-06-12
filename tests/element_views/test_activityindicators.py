@@ -5,11 +5,11 @@ import pytest
 import unittest
 
 
-@pytest.mark.usefixtures("one_time_set_up", "setUp")
+@pytest.mark.usefixtures("create_driver")
 class ActivityIndicatorsTests(unittest.TestCase):
 
     @pytest.fixture(autouse=True)
-    def classSetup(self, one_time_set_up, get_platform):
+    def classSetup(self, create_driver, get_platform):
         self.ai = ActivityIndicators(self.driver, self.platform)
         self.testStatus = StatusOfTest(self.driver)
         self.homeView = HomeView(self.driver)

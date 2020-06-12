@@ -5,11 +5,11 @@ from utilities.statusoftest import StatusOfTest
 import pytest
 
 
-@pytest.mark.usefixtures("one_time_set_up", "setUp")
+@pytest.mark.usefixtures("create_driver")
 class TestDatePicker(unittest.TestCase):
 
     @pytest.fixture(autouse=True)
-    def class_setup(self, one_time_set_up, get_platform):
+    def class_setup(self, create_driver, get_platform):
         self.homeView = HomeView(self.driver)
         self.datePicker = DatePickerView(self.driver, self.platform)
         self.testStatus = StatusOfTest(self.driver)

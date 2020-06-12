@@ -5,11 +5,11 @@ import unittest
 import pytest
 
 
-@pytest.mark.usefixtures("one_time_set_up", "setUp")
+@pytest.mark.usefixtures("create_driver")
 class ActionSheetsTests(unittest.TestCase):
 
     @pytest.fixture(autouse=True)
-    def classSetup(self, one_time_set_up, get_platform):
+    def classSetup(self, create_driver, get_platform):
         self.ASView = ActionSheetsView(self.driver, self.platform)
         self.testStatus = StatusOfTest(self.driver)
         self.homeView = HomeView(self.driver)
@@ -35,3 +35,12 @@ class ActionSheetsTests(unittest.TestCase):
         result = self.ASView.verify_buttons_disappear()
         self.testStatus.assertionMark("test_tapping_on_ok_cancel_button", result,
                                       "\nVerifying OK and Cancel buttons are not displayed after clicking OS OK button")
+
+    def test_whatever(self):
+        pass
+
+    def test_whatever2(self):
+        pass
+
+    def test_whatever3(self):
+        pass

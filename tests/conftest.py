@@ -3,16 +3,8 @@ from base.capsfactory import CapsFactory
 
 
 @pytest.fixture()
-# Currently not doing anything with the tests. Just here to serve as a method-level fixture example.
-def setUp():
-    print("Running method level set up -- not doing anything")
-    yield
-    print("Running method level tear down -- not doing anything")
-
-
-@pytest.fixture(scope="class")
-def one_time_set_up(request, device):
-    print("Running one time setup, getting driver")
+def create_driver(request, device):
+    print("Getting new driver for the test")
     caps_factory = CapsFactory(device)
     driver = caps_factory.get_driver_instance()
 
@@ -21,12 +13,11 @@ def one_time_set_up(request, device):
 
     yield driver
     driver.quit()
-    print("Running one time tear down")
+    print("Quitting the driver for this test")
 
 
-@pytest.fixture(scope="class")
+@pytest.fixture()
 def get_platform(request, device):
-    print("Getting platform for locators")
     caps_factory = CapsFactory(device)
     platform = caps_factory.get_platform_name()
 
@@ -37,7 +28,7 @@ def get_platform(request, device):
 
 
 def pytest_addoption(parser):
-    parser.addoption("--device", help="ios-sim || android-sim || physical_android_caps || physical_ios_caps")
+    parser.addoption("--device", help="ios-sim || android-sim || android-real-device || ios-real-device")
     parser.addoption("--osVersion")
 
 
